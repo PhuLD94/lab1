@@ -2,9 +2,9 @@
 #include <string>
 using namespace std;
 
-const float breakfast_allowance = 9.0;
-const float lunch_allowance = 12.0;
-const float dinner_allowance = 16.0;
+const float BREAKFAST_ALLOWANCE = 9.0;
+const float LUNCH_ALLOWANCE = 12.0;
+const float DINNER_ALLOWANCE = 16.0;
 
 struct MealExpense {
     float total_spent_meal;
@@ -80,21 +80,21 @@ MealExpense calculate_meal_expense(int total_day_travel, string departure_time_s
             cout << "Enter dinner cost for day " << i+1 << ": ";
             cin >> dinner_cost;
         }
-        if (breakfast_cost > breakfast_allowance){
-            total_allowed_meal += breakfast_allowance;
-            breakfast_cost -= breakfast_allowance;
+        if (breakfast_cost > BREAKFAST_ALLOWANCE){
+            total_allowed_meal += BREAKFAST_ALLOWANCE;
+            breakfast_cost -= BREAKFAST_ALLOWANCE;
         }
         else breakfast_cost = 0.0;
 
-        if (lunch_cost > lunch_allowance){
-            total_allowed_meal += lunch_allowance;
-            lunch_cost -= lunch_allowance;
+        if (lunch_cost > LUNCH_ALLOWANCE){
+            total_allowed_meal += LUNCH_ALLOWANCE;
+            lunch_cost -= LUNCH_ALLOWANCE;
         }
         else lunch_cost = 0.0;
 
-        if (dinner_cost > dinner_allowance){
-            total_allowed_meal += dinner_allowance;
-            dinner_cost -= dinner_allowance;
+        if (dinner_cost > DINNER_ALLOWANCE){
+            total_allowed_meal += DINNER_ALLOWANCE;
+            dinner_cost -= DINNER_ALLOWANCE;
         }
         else dinner_cost = 0.0;
 
