@@ -7,10 +7,6 @@ const float BREAKFAST_ALLOWANCE = 9.0;
 const float LUNCH_ALLOWANCE = 12.0;
 const float DINNER_ALLOWANCE = 16.0;
 
-// struct MealExpense {
-//     float total_spent_meal;
-//     float total_allowed_meal;
-// };
 // This function return the total meal expense spent and allowed
 // Args:
     // int total_day_travel: total days of travel
@@ -69,7 +65,7 @@ MealExpense calculate_meal_expense(int total_day_travel, string departure_time_s
             cout << "Enter dinner cost for day " << i+1 << ": ";
             cin >> dinner_cost;
         }
-        
+
         if (breakfast_cost > BREAKFAST_ALLOWANCE){
             total_allowed_meal += BREAKFAST_ALLOWANCE;
             breakfast_cost -= BREAKFAST_ALLOWANCE;
@@ -104,9 +100,3 @@ MealExpense calculate_meal_expense(int total_day_travel, string departure_time_s
 
 }
 
-int main(){
-    MealExpense result = calculate_meal_expense(3, "10:00", "21:00");
-    cout << result.total_spent_meal << " " << result.total_allowed_meal << endl;
-    return 0;
-
-}
