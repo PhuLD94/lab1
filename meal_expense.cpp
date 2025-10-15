@@ -1,15 +1,16 @@
 #include <iostream>
 #include <string>
+#include "meal_expense.h"
 using namespace std;
 
 const float BREAKFAST_ALLOWANCE = 9.0;
 const float LUNCH_ALLOWANCE = 12.0;
 const float DINNER_ALLOWANCE = 16.0;
 
-struct MealExpense {
-    float total_spent_meal;
-    float total_allowed_meal;
-};
+// struct MealExpense {
+//     float total_spent_meal;
+//     float total_allowed_meal;
+// };
 // This function return the total meal expense spent and allowed
 // Args:
     // int total_day_travel: total days of travel
@@ -29,47 +30,35 @@ MealExpense calculate_meal_expense(int total_day_travel, string departure_time_s
     bool allow_dinner_last = arrival_time > 19;
     float total_spent_meal = 0.0;
     float total_allowed_meal = 0.0;
-    float breakfast_cost = 0.0, lunch_cost = 0.0, dinner_cost = 0.0;
+    // float breakfast_cost = 0.0, lunch_cost = 0.0, dinner_cost = 0.0;
     for(int i = 0; i < total_day_travel; i++){
         float breakfast_cost = 0.0, lunch_cost = 0.0, dinner_cost = 0.0;
         if (i == 0){
-            if (allow_dinner_last){
+            if (allow_breakfast_first){
                 cout << "Enter breakfast cost for day " << i+1 << ": ";
                 cin >> breakfast_cost;
+            }
+            if (allow_lunch_first){
                 cout << "Enter lunch cost for day " << i+1 << ": ";
                 cin >> lunch_cost;
+            }
+            if (allow_dinner_last){
                 cout << "Enter dinner cost for day " << i+1 << ": ";
                 cin >> dinner_cost;
-            }
-            else if (allow_lunch_last){
-                cout << "Enter breakfast cost for day " << i+1 << ": ";
-                cin >> breakfast_cost;
-                cout << "Enter lunch cost for day " << i+1 << ": ";
-                cin >> lunch_cost;
-            }
-            else if (allow_breakfast_last){
-                cout << "Enter breakfast cost for day " << i+1 << ": ";
-                cin >> breakfast_cost;
             }
         }
-        else if (i == total_day_travel - 1){
-            if (allow_dinner_last){
+        else if(i == total_day_travel - 1){
+            if (allow_breakfast_last){
                 cout << "Enter breakfast cost for day " << i+1 << ": ";
                 cin >> breakfast_cost;
+            }
+            if (allow_lunch_last){
                 cout << "Enter lunch cost for day " << i+1 << ": ";
                 cin >> lunch_cost;
+            }
+            if (allow_dinner_last){
                 cout << "Enter dinner cost for day " << i+1 << ": ";
                 cin >> dinner_cost;
-            }
-            else if (allow_lunch_last){
-                cout << "Enter breakfast cost for day " << i+1 << ": ";
-                cin >> breakfast_cost;
-                cout << "Enter lunch cost for day " << i+1 << ": ";
-                cin >> lunch_cost;
-            }
-            else if (allow_breakfast_last){
-                cout << "Enter breakfast cost for day " << i+1 << ": ";
-                cin >> breakfast_cost;
             }
         }
         else{
@@ -80,23 +69,33 @@ MealExpense calculate_meal_expense(int total_day_travel, string departure_time_s
             cout << "Enter dinner cost for day " << i+1 << ": ";
             cin >> dinner_cost;
         }
+        
         if (breakfast_cost > BREAKFAST_ALLOWANCE){
             total_allowed_meal += BREAKFAST_ALLOWANCE;
             breakfast_cost -= BREAKFAST_ALLOWANCE;
         }
-        else breakfast_cost = 0.0;
+        else{
+            total_allowed_meal += breakfast_cost;
+            breakfast_cost = 0.0;
+        } 
 
         if (lunch_cost > LUNCH_ALLOWANCE){
             total_allowed_meal += LUNCH_ALLOWANCE;
             lunch_cost -= LUNCH_ALLOWANCE;
         }
-        else lunch_cost = 0.0;
+        else{
+            total_allowed_meal += lunch_cost;
+            lunch_cost = 0.0;
+        } 
 
         if (dinner_cost > DINNER_ALLOWANCE){
             total_allowed_meal += DINNER_ALLOWANCE;
             dinner_cost -= DINNER_ALLOWANCE;
         }
-        else dinner_cost = 0.0;
+        else{
+            total_allowed_meal += dinner_cost;
+            dinner_cost = 0.0;
+        }
 
         total_spent_meal += breakfast_cost + lunch_cost + dinner_cost; 
     }
@@ -106,7 +105,7 @@ MealExpense calculate_meal_expense(int total_day_travel, string departure_time_s
 }
 
 int main(){
-    MealExpense result = calculate_meal_expense(1, "06:30", "14:25");
+    MealExpense result = calculate_meal_expense(3, "10:00", "21:00");
     cout << result.total_spent_meal << " " << result.total_allowed_meal << endl;
     return 0;
 
