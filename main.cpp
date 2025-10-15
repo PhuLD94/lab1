@@ -1,16 +1,43 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const float BREAKFAST_ALLOWANCE = 9.0;
-const float LUNCH_ALLOWANCE = 12.0;
-const float DINNER_ALLOWANCE = 16.0;
+
 
 struct MealExpense {
     float total_spent_meal;
     float total_allowed_meal;
+    float total_saved_meal;
 };
 
-MealExpense calculateMealExpense(int total_day_travel, string departure_time_string, string arrival_time_string) {
+struct ParkingFee{
+    double total_expense_parking;
+    double total_allowed_parking;
+};
+
+struct TaxiFee{
+    double total_expense_taxi;
+    double total_allowed_taxi;
+};
+
+struct HotelExpense{
+    double total_expense_hotel;
+    double total_allowed_hotel;
+};
+
+
+const float BREAKFAST_ALLOWANCE = 9.0;
+const float LUNCH_ALLOWANCE = 12.0;
+const float DINNER_ALLOWANCE = 16.0;
+
+// This function return the total meal expense spent and allowed
+// Args:
+    // int total_day_travel: total days of travel
+    // string departure_time_string: departure time in string format "HH:MM"
+    // string arrival_time_string: arrival time in string format "HH:MM"
+// Return:
+    // float: total meal expense spent
+    // float: total meal expense allowed
+MealExpense calculate_meal_expense(int total_day_travel, string departure_time_string, string arrival_time_string) {
     int departure_time = stoi(departure_time_string, 0);
     int arrival_time = stoi(arrival_time_string, 0);
     bool allow_breakfast_first = departure_time < 7;
@@ -21,47 +48,35 @@ MealExpense calculateMealExpense(int total_day_travel, string departure_time_str
     bool allow_dinner_last = arrival_time > 19;
     float total_spent_meal = 0.0;
     float total_allowed_meal = 0.0;
-    float breakfast_cost = 0.0, lunch_cost = 0.0, dinner_cost = 0.0;
+    float total_saved_meal = 0.0;
     for(int i = 0; i < total_day_travel; i++){
         float breakfast_cost = 0.0, lunch_cost = 0.0, dinner_cost = 0.0;
         if (i == 0){
-            if (allow_dinner_last){
+            if (allow_breakfast_first){
                 cout << "Enter breakfast cost for day " << i+1 << ": ";
                 cin >> breakfast_cost;
+            }
+            if (allow_lunch_first){
                 cout << "Enter lunch cost for day " << i+1 << ": ";
                 cin >> lunch_cost;
+            }
+            if (allow_dinner_first){
                 cout << "Enter dinner cost for day " << i+1 << ": ";
                 cin >> dinner_cost;
-            }
-            else if (allow_lunch_last){
-                cout << "Enter breakfast cost for day " << i+1 << ": ";
-                cin >> breakfast_cost;
-                cout << "Enter lunch cost for day " << i+1 << ": ";
-                cin >> lunch_cost;
-            }
-            else if (allow_breakfast_last){
-                cout << "Enter breakfast cost for day " << i+1 << ": ";
-                cin >> breakfast_cost;
             }
         }
-        else if (i == total_day_travel - 1){
-            if (allow_dinner_last){
+        else if(i == total_day_travel - 1){
+            if (allow_breakfast_last){
                 cout << "Enter breakfast cost for day " << i+1 << ": ";
                 cin >> breakfast_cost;
+            }
+            if (allow_lunch_last){
                 cout << "Enter lunch cost for day " << i+1 << ": ";
                 cin >> lunch_cost;
+            }
+            if (allow_dinner_last){
                 cout << "Enter dinner cost for day " << i+1 << ": ";
                 cin >> dinner_cost;
-            }
-            else if (allow_lunch_last){
-                cout << "Enter breakfast cost for day " << i+1 << ": ";
-                cin >> breakfast_cost;
-                cout << "Enter lunch cost for day " << i+1 << ": ";
-                cin >> lunch_cost;
-            }
-            else if (allow_breakfast_last){
-                cout << "Enter breakfast cost for day " << i+1 << ": ";
-                cin >> breakfast_cost;
             }
         }
         else{
@@ -72,28 +87,30 @@ MealExpense calculateMealExpense(int total_day_travel, string departure_time_str
             cout << "Enter dinner cost for day " << i+1 << ": ";
             cin >> dinner_cost;
         }
-        if (breakfast_cost > BREAKFAST_ALLOWANCE){
-            total_allowed_meal += BREAKFAST_ALLOWANCE;
-            breakfast_cost -= BREAKFAST_ALLOWANCE;
-        }
-        else breakfast_cost = 0.0;
-
-        if (lunch_cost > LUNCH_ALLOWANCE){
-            total_allowed_meal += LUNCH_ALLOWANCE;
-            lunch_cost -= LUNCH_ALLOWANCE;
-        }
-        else lunch_cost = 0.0;
-
-        if (dinner_cost > DINNER_ALLOWANCE){
-            total_allowed_meal += DINNER_ALLOWANCE;
-            dinner_cost -= DINNER_ALLOWANCE;
-        }
-        else dinner_cost = 0.0;
 
         total_spent_meal += breakfast_cost + lunch_cost + dinner_cost; 
+
+        if (breakfast_cost > BREAKFAST_ALLOWANCE) total_allowed_meal += BREAKFAST_ALLOWANCE;
+        else{
+            total_allowed_meal += breakfast_cost;
+            total_saved_meal += BREAKFAST_ALLOWANCE - breakfast_cost;
+        } 
+
+        if (lunch_cost > LUNCH_ALLOWANCE) total_allowed_meal += LUNCH_ALLOWANCE;
+        else{
+            total_allowed_meal += lunch_cost;
+            total_saved_meal += LUNCH_ALLOWANCE - lunch_cost;
+        } 
+
+        if (dinner_cost > DINNER_ALLOWANCE) total_allowed_meal += DINNER_ALLOWANCE;
+        else{
+            total_allowed_meal += dinner_cost;
+            total_saved_meal += DINNER_ALLOWANCE - dinner_cost;
+        }
     }
 
-    return {total_spent_meal, total_allowed_meal};
+    return {total_spent_meal, total_allowed_meal, total_saved_meal};
+
 
 }
 
@@ -116,7 +133,7 @@ int getTripDays()
 
 
 //Function for airfare
-double getAirFare(double totalExpense, double totalAllowed){
+double getAirFare(){
     double airFare;
     do 
     {
@@ -128,11 +145,10 @@ double getAirFare(double totalExpense, double totalAllowed){
         
     }while (airFare < 0);
     return airFare;
-    totalAllowed+=airFare;
-    totalExpense+=airFare;
+   
 }
 //Function for car rentals
-double getCarRental(double totalExpense , double totalAllowed)
+double getCarRental()
 {
     double carRental;
     do
@@ -143,8 +159,7 @@ double getCarRental(double totalExpense , double totalAllowed)
           cout << "Error: The amount of car rental must be greater than 0" << endl;
         
     } while (carRental < 0);
-    totalAllowed+=carRental;
-    totalExpense+=carRental;
+    
     return carRental;
     
 
@@ -156,7 +171,7 @@ struct TotalTime {
     string arrival;
 };
 
-TotalTime totaltime (){
+TotalTime totalTime (){
     string departure_time, arrival_time;
     int deph, depm, arrh, arrm;
     do{
@@ -177,91 +192,93 @@ TotalTime totaltime (){
 
   
 
-double Conference_Seminar_fee(){
+double getConference(){
     double registration_fees;
     do{
         cout<<"Enter the fee for Conference or Seminar registration: $";
         cin>>registration_fees;
        } while(registration_fees < 0);
     return registration_fees;
+    cout<<"The fee for Conference or Seminar registration is: $"<< registration_fees << endl;
 }
 
-double ParkingFee(double &exceed_Parking){
+
+
+ParkingFee calculateParkingFee(){
     
     int PDays;
     double Allowed_Parking_Fee = 6;
-    double Used_per_day;
-    double Total_Allowed_fees;
-    double Total_used_fees = 0;
+    double used_per_day;
+    double total_allowed_parking;
+    double total_expense_parking = 0;
     do{
         cout<<"Enter the number of days spent at parking: ";
         cin>>PDays; 
        } while(PDays <= 0);
-       Total_Allowed_fees =  Allowed_Parking_Fee * PDays;
+       total_allowed_parking =  Allowed_Parking_Fee * PDays;
     for(int i = 1; i <= PDays; i++){
         do{
         cout<<"Enter the Parking fee expenses " <<i<<" : $";
-        cin>>Used_per_day;
-          }while(Used_per_day < 0);
-      if(Used_per_day > 10){
-        exceed_Parking = exceed_Parking + Used_per_day - 6;
-        }
-      Total_used_fees = Total_used_fees + Used_per_day;
+        cin>>used_per_day;
+          }while(used_per_day < 0);
+      
+      total_expense_parking += used_per_day;
     }
-    return Total_used_fees;
+    return {total_expense_parking,total_allowed_parking};
 }	
-double TaxiFee(double &exceed_Taxi){
+
+
+TaxiFee calculateTaxiFee(){
     int TDays;
     double Allowed_Taxi_Fee = 10;
     double Used_per_day;
-    double Total_Allowed_fees;
-    double Total_Used_Fees = 0;
+    double total_allowed_taxi;
+    double total_expense_taxi = 0;
     do{
         cout<<"Enter the number of days spent on taxi: ";
         cin>>TDays; 
        } while(TDays <= 0);
-       Total_Allowed_fees = Allowed_Taxi_Fee * TDays;
+       total_allowed_taxi = Allowed_Taxi_Fee * TDays;
     for(int i = 1; i <= TDays; i++){
         do{
         cout<<"Enter the Taxi fee expenses " <<i<<": $";
         cin>>Used_per_day;
           }while(Used_per_day < 0);
-     if(Used_per_day > 10){
-            exceed_Taxi = exceed_Taxi + Used_per_day - 10;
-        }
-      Total_Used_Fees = Total_Used_Fees + Used_per_day;
+     
+      total_expense_taxi +=  Used_per_day;
     }
-    return Total_Used_Fees;
+    return {total_expense_taxi, total_allowed_taxi};
 }
 
 
-double Hotel_expenses(double &Exceed_Hotel_fee){
+HotelExpense calculateHotelExpense(){
     int Travelled_Night;
     double Allowed_Hotel_fees_per_night = 90;
-    double Used_per_night;
-    double Total_Allowed_fees;
-    double Total_Used_fees = 0;
+    double used_per_night;
+    double total_allowed_hotel;
+    double total_expense_hotel = 0;
     
     do{
         cout<<"Enter the night spent at the Hotel: ";
         cin>>Travelled_Night; 
        } while(Travelled_Night <= 0);
-       Total_Allowed_fees = Allowed_Hotel_fees_per_night * Travelled_Night;
+       total_allowed_hotel = Allowed_Hotel_fees_per_night * Travelled_Night;
     for(int i = 1; i <= Travelled_Night; i++){
         do{
         cout<<"Enter the Hotel expenses in the " <<i<<" night: $";
-        cin>>Used_per_night;
-          }while(Used_per_night < 0);
-        if(Used_per_night > 90){
-            Exceed_Hotel_fee = Exceed_Hotel_fee + Used_per_night - 90;
-        }
-      Total_Used_fees = Total_Used_fees + Used_per_night;
+        cin>>used_per_night;
+          }while(used_per_night < 0);
+        
+        
+      total_expense_hotel  += used_per_night;
     }
       
-    return Total_Used_fees;
+    return {total_expense_hotel,total_allowed_hotel};
+    
+    
 }
 
-double calVehicleExpense(){
+double calculateVehicleExpense(){
         double milesDriven; // số dặm đã lái
         const double RATE = 0.27; // 0.27 USD mỗi dặm
         do{
@@ -277,39 +294,41 @@ double calVehicleExpense(){
 
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    double totalExpenses=0.0;
-    double totalAllowed=0.0;
+    
+    double total_expenses=0.0;
+    double total_allowed=0.0;
     // Your code here
     int trip_days = getTripDays();
-    getAirFare(totalExpenses, totalAllowed);
-    TotalTime time = totaltime();
-    double car_rental = getCarRental(totalExpenses, totalAllowed);
-    double exceed_Parking = 0;
-    double exceed_Taxi = 0;
+    TotalTime time =  totalTime();
+    double car_rental = getCarRental();
+    double air_fare=getAirFare();
+    double exceed_parking = 0;
+    double allowed_parking=0;
+    double exceed_taxi = 0;
+    double allowed_taxi=0;
     double exceed_hotel = 0;
-    double vehicle_fee = calVehicleExpense();
-    double parking_fee=ParkingFee(exceed_Parking);
-    double taxi_fee=TaxiFee(exceed_Taxi);
-    double registration_fees =Conference_Seminar_fee();
-    MealExpense meal = calculateMealExpense(trip_days, time.departure, time.arrival);
-    double Exceed_Hotel_fee = 0;
-    double hotel_fee = Hotel_expenses(Exceed_Hotel_fee);
-    cout<<"The fee for Conference or Seminar registration is: $"<< registration_fees << endl;
-    cout<<"The total Hotel expenses are: $"<< hotel_fee <<endl;
-    cout<<"The exceed fee is: $"<< Exceed_Hotel_fee;
-    totalExpenses = car_rental + vehicle_fee + parking_fee + taxi_fee + registration_fees + hotel_fee + meal.total_spent_meal;
-    totalAllowed = meal.total_allowed_meal;
+    double exceed_hotel_fee = 0;
+    double vehicle_fee = calculateVehicleExpense();
+    
+    ParkingFee parking=calculateParkingFee();
+    TaxiFee taxi=calculateTaxiFee();
+    double registration_fees =getConference();
+    HotelExpense hotel = calculateHotelExpense();
+    MealExpense meal = calculate_meal_expense(trip_days, time.departure, time.arrival);
+    
+    //
+    total_expenses=air_fare + car_rental + vehicle_fee + parking.total_expense_parking + taxi.total_expense_taxi + registration_fees + hotel.total_expense_hotel + meal.total_spent_meal;
+    total_allowed =air_fare + car_rental + vehicle_fee + parking.total_allowed_parking + taxi.total_allowed_taxi + registration_fees + hotel.total_allowed_hotel+ meal.total_allowed_meal+meal.total_saved_meal;
+
     // ---------- Results ----------
     cout << "\n========== SUMMARY ==========\n";
-    cout << "Total expenses:           $" << (totalExpenses) << "\n";
-    cout << "Total allowable expenses: $" << (totalAllowed)  << "\n";
+    cout << "Total expenses:           $" << (total_expenses) << "\n";
+    cout << "Total allowable expenses: $" << (total_allowed)  << "\n";
 
-    if (totalExpenses > totalAllowed) {
-        cout << "Excess to be reimbursed by employee: $" <<(totalExpenses - totalAllowed) << "\n";
-    } else if (totalAllowed > totalExpenses) {
-        cout << "Amount saved by employee: $"<< (totalAllowed - totalExpenses) << "\n";
+    if (total_expenses > total_allowed) {
+        cout << "Excess to be reimbursed by employee: $" <<(total_expenses - total_allowed) << "\n";
+    } else if (total_allowed > total_expenses) {
+        cout << "Amount saved by employee: $"<< (total_allowed - total_expenses) << "\n";
     } else {
         cout << "Expenses exactly match the allowance.\n";
     }
