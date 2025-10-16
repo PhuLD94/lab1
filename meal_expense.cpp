@@ -1,15 +1,22 @@
 #include <iostream>
 #include <string>
-#include "meal_expense.h"
+#include "main.h"
 using namespace std;
 
 const float BREAKFAST_ALLOWANCE = 9.0;
 const float LUNCH_ALLOWANCE = 12.0;
 const float DINNER_ALLOWANCE = 16.0;
 
-
+// This function return the total meal expense spent and allowed
+// Args:
+    // int total_day_travel: total days of travel
+    // string departure_time_string: departure time in string format "HH:MM"t 
+    // string arrival_time_string: arrival time in string format "HH:MM"
+// Return:
+    // float: total meal expense spent
+    // float: total meal expense allowed
 MealExpense calculate_meal_expense(int total_day_travel, string departure_time_string, string arrival_time_string) {
-    int departure_time = stoi(departure_time_string, 0);
+   int departure_time = stoi(departure_time_string, 0);
     int arrival_time = stoi(arrival_time_string, 0);
     bool allow_breakfast_first = departure_time < 7;
     bool allow_breakfast_last = arrival_time > 8;
@@ -81,6 +88,7 @@ MealExpense calculate_meal_expense(int total_day_travel, string departure_time_s
     }
 
     return {total_spent_meal, total_allowed_meal, total_saved_meal};
+
 
 }
 
