@@ -1,5 +1,5 @@
 #include <iostream>
-#include "main.cpp"
+#include "main.h"
 using namespace std;
 
 double getConference(){
