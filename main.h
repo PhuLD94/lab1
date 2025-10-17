@@ -35,6 +35,7 @@ struct TotalTime {
     string departure;
     string arrival;
 };
+
 int getTripDays();
 TotalTime getTime();
 double getAirFare();
@@ -44,7 +45,6 @@ double getConference();
 ParkingFee calculateParkingFee();
 HotelExpense calculateHotelExpense();
 TaxiFee calculateTaxiFee();
-
 MealExpense calculate_meal_expense(int total_day_travel, string departure_time_string, string arrival_time_string);
 
 #endif

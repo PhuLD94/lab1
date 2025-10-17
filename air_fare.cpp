@@ -9,7 +9,7 @@ double getAirFare(){
     double airFare;
     do 
     {
-        cout << "The amount of round-trip airfare: $" << endl;
+        cout << "The amount of round-trip airfare: $" ;
         cin >> airFare;
         
         if(airFare < 0)

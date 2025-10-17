@@ -10,7 +10,7 @@ using namespace std;
 ParkingFee calculateParkingFee(){
     
     int PDays;
-    double Allowed_Parking_Fee = 6;
+    double allowed_parking_fee = 6;
     double used_per_day;
     double total_allowed_parking;
     double total_expense_parking = 0;
@@ -18,7 +18,7 @@ ParkingFee calculateParkingFee(){
         cout<<"Enter the number of days spent at parking: ";
         cin>>PDays; 
        } while(PDays <= 0);
-       total_allowed_parking =  Allowed_Parking_Fee * PDays;
+       total_allowed_parking =  allowed_parking_fee * PDays;
     for(int i = 1; i <= PDays; i++){
         do{
         cout<<"Enter the Parking fee expenses " <<i<<" : $";

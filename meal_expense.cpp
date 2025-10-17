@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include "main.h"
 using namespace std;
@@ -31,38 +32,38 @@ MealExpense calculate_meal_expense(int total_day_travel, string departure_time_s
         float breakfast_cost = 0.0, lunch_cost = 0.0, dinner_cost = 0.0;
         if (i == 0){
             if (allow_breakfast_first){
-                cout << "Enter breakfast cost for day " << i+1 << ": ";
+                cout << "Enter breakfast cost for day " << i+1 << ": $";
                 cin >> breakfast_cost;
             }
             if (allow_lunch_first){
-                cout << "Enter lunch cost for day " << i+1 << ": ";
+                cout << "Enter lunch cost for day " << i+1 << ": $";
                 cin >> lunch_cost;
             }
             if (allow_dinner_first){
-                cout << "Enter dinner cost for day " << i+1 << ": ";
+                cout << "Enter dinner cost for day " << i+1 << ": $";
                 cin >> dinner_cost;
             }
         }
         else if(i == total_day_travel - 1){
             if (allow_breakfast_last){
-                cout << "Enter breakfast cost for day " << i+1 << ": ";
+                cout << "Enter breakfast cost for day " << i+1 << ": $";
                 cin >> breakfast_cost;
             }
             if (allow_lunch_last){
-                cout << "Enter lunch cost for day " << i+1 << ": ";
+                cout << "Enter lunch cost for day " << i+1 << ": $";
                 cin >> lunch_cost;
             }
             if (allow_dinner_last){
-                cout << "Enter dinner cost for day " << i+1 << ": ";
+                cout << "Enter dinner cost for day " << i+1 << ": $";
                 cin >> dinner_cost;
             }
         }
         else{
-            cout << "Enter breakfast cost for day " << i+1 << ": ";
+            cout << "Enter breakfast cost for day " << i+1 << ": $";
             cin >> breakfast_cost;
-            cout << "Enter lunch cost for day " << i+1 << ": ";
+            cout << "Enter lunch cost for day " << i+1 << ": $";
             cin >> lunch_cost;
-            cout << "Enter dinner cost for day " << i+1 << ": ";
+            cout << "Enter dinner cost for day " << i+1 << ": $";
             cin >> dinner_cost;
         }
 

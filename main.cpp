@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <iomanip>
+#include <string>
 #include "main.h"
 using namespace std;
 
@@ -9,22 +11,22 @@ int main() {
     
     double total_expenses=0.0;
     double total_allowed=0.0;
-    // Your code here
+
+    // Functions
     int trip_days = getTripDays();
-    TotalTime time =  getTime();
+    TotalTime time = getTime();
+    double air_fare= getAirFare();
     double car_rental = getCarRental();
-    double air_fare=getAirFare();
     double vehicle_fee = calculateVehicleExpense();
-    double registration =getConference();
-    ParkingFee parking=calculateParkingFee();
-    TaxiFee taxi=calculateTaxiFee();
-    
+    ParkingFee parking= calculateParkingFee();
+    TaxiFee taxi= calculateTaxiFee();
+    double registration = getConference();   
     HotelExpense hotel = calculateHotelExpense();
     MealExpense meal = calculate_meal_expense(trip_days, time.departure, time.arrival);
     
-    //
+    //Calculate
     total_expenses=air_fare + car_rental + vehicle_fee + parking.total_expense_parking + taxi.total_expense_taxi + registration + hotel.total_expense_hotel + meal.total_spent_meal;
-    total_allowed =air_fare + car_rental + vehicle_fee + parking.total_allowed_parking + taxi.total_allowed_taxi + registration + hotel.total_allowed_hotel+ meal.total_allowed_meal+meal.total_saved_meal;
+    total_allowed =air_fare + car_rental + vehicle_fee + parking.total_allowed_parking + taxi.total_allowed_taxi + registration + hotel.total_allowed_hotel + meal.total_allowed_meal + meal.total_saved_meal;
 
     // ---------- Results ----------
     cout << "\n========== SUMMARY ==========\n";
