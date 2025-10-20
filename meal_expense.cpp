@@ -4,9 +4,9 @@
 #include "main.h"
 using namespace std;
 
-const float BREAKFAST_ALLOWANCE = 9.0;
-const float LUNCH_ALLOWANCE = 12.0;
-const float DINNER_ALLOWANCE = 16.0;
+const double BREAKFAST_ALLOWANCE = 9.0;
+const double LUNCH_ALLOWANCE = 12.0;
+const double DINNER_ALLOWANCE = 16.0;
 
 // This function return the total meal expense spent and allowed
 // Args:
@@ -14,9 +14,9 @@ const float DINNER_ALLOWANCE = 16.0;
     // string departure_time_string: departure time in string format "HH:MM"t 
     // string arrival_time_string: arrival time in string format "HH:MM"
 // Return:
-    // float: total meal expense spent
-    // float: total meal expense allowed
-MealExpense calculate_meal_expense(int total_day_travel, string departure_time_string, string arrival_time_string) {
+    // double: total meal expense spent
+    // double: total meal expense allowed
+void calculate_meal_expense(int total_day_travel, string departure_time_string, string arrival_time_string,double &total_spent_meal,double &total_allowed_meal,double &total_saved_meal) {
    int departure_time = stoi(departure_time_string, 0);
     int arrival_time = stoi(arrival_time_string, 0);
     bool allow_breakfast_first = departure_time < 7;
@@ -25,11 +25,11 @@ MealExpense calculate_meal_expense(int total_day_travel, string departure_time_s
     bool allow_lunch_last = arrival_time > 13;
     bool allow_dinner_first = departure_time < 18;
     bool allow_dinner_last = arrival_time > 19;
-    float total_spent_meal = 0.0;
-    float total_allowed_meal = 0.0;
-    float total_saved_meal = 0.0;
+    double total_spent_meal = 0.0;
+    double total_allowed_meal = 0.0;
+    double total_saved_meal = 0.0;
     for(int i = 0; i < total_day_travel; i++){
-        float breakfast_cost = 0.0, lunch_cost = 0.0, dinner_cost = 0.0;
+        double breakfast_cost = 0.0, lunch_cost = 0.0, dinner_cost = 0.0;
         if (i == 0){
             if (allow_breakfast_first){
                 cout << "Enter breakfast cost for day " << i+1 << ": $";
@@ -88,7 +88,7 @@ MealExpense calculate_meal_expense(int total_day_travel, string departure_time_s
         }
     }
 
-    return {total_spent_meal, total_allowed_meal, total_saved_meal};
+   
 
 
 }

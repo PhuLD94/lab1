@@ -2,9 +2,7 @@
 #include <iomanip>
 #include <string>
 #include "main.h"
-
 using namespace std;
-
 
 TotalTime getTime (){
     string departure_time, arrival_time;

@@ -1,3 +1,3 @@
-g++ air_fare.cpp car_rental.cpp get_time.cpp hotel_expense.cpp meal_expense.cpp main.cpp parking_fee.cpp registration.cpp taxi_fee.cpp trip_days.cpp vehicle_expense.cpp -o test.exe
+g++ *.cpp -o test.exe
 
 ./test.exe

@@ -2,7 +2,6 @@
 #include <iomanip>
 #include <string>
 #include "main.h"
-
 using namespace std;
 
 double calculateVehicleExpense(){

@@ -2,11 +2,10 @@
 #include <iomanip>
 #include <string>
 #include "main.h"
-
 using namespace std;
 
 
-TaxiFee calculateTaxiFee(){
+void calculateTaxiFee(int &TDays, double &total_expense_taxi, double &total_allowed_taxi) {
     int TDays;
     double allowed_taxi_fee = 10;
     double used_per_day;
@@ -25,5 +24,5 @@ TaxiFee calculateTaxiFee(){
      
       total_expense_taxi +=  used_per_day;
     }
-    return {total_expense_taxi, total_allowed_taxi};
+    
 }

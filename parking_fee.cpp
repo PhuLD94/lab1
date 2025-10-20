@@ -2,13 +2,11 @@
 #include <iomanip>
 #include <string>
 #include "main.h"
-
 using namespace std;
 
 
 
-ParkingFee calculateParkingFee(){
-    
+void calculateParkingFee(int &PDays, double &total_expense_parking, double &total_allowed_parking) {
     int PDays;
     double allowed_parking_fee = 6;
     double used_per_day;
@@ -27,5 +25,5 @@ ParkingFee calculateParkingFee(){
       
       total_expense_parking += used_per_day;
     }
-    return {total_expense_parking,total_allowed_parking};
+   
 }	

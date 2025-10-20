@@ -19,6 +19,4 @@ double getCarRental()
     
     return carRental;
     
-
-    
 }

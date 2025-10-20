@@ -4,32 +4,11 @@
 #include <iostream>
 #include <iomanip>
 #include <limits>
-
 using namespace std;
 
 
 
-struct TaxiFee{
-    double total_expense_taxi;
-    double total_allowed_taxi;
-};
-struct ParkingFee{
-    double total_expense_parking;
-    double total_allowed_parking;
-};
 
-struct MealExpense {
-    float total_spent_meal;
-    float total_allowed_meal;
-    float total_saved_meal;
-};
-
-
-
-struct HotelExpense{
-    double total_expense_hotel;
-    double total_allowed_hotel;
-};
 
 struct TotalTime {
     string departure;
@@ -42,9 +21,9 @@ double getAirFare();
 double getCarRental();
 double calculateVehicleExpense();
 double getConference();
-ParkingFee calculateParkingFee();
-HotelExpense calculateHotelExpense();
-TaxiFee calculateTaxiFee();
-MealExpense calculate_meal_expense(int total_day_travel, string departure_time_string, string arrival_time_string);
+void calculateParkingFee(int &PDays, double &total_expense_parking, double &total_allowed_parking);
+void calculateHotelExpense(int &travelled_night, double &total_expense_hotel, double &total_allowed_hotel);
+void calculateTaxiFee(int &TDays, double &total_expense_taxi, double &total_allowed_taxi);
+void calculate_meal_expense(int total_day_travel, string departure_time_string, string arrival_time_string,double &total_spent_meal,double &total_allowed_meal,double &total_saved_meal);
 
 #endif

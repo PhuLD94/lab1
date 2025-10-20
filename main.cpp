@@ -4,29 +4,37 @@
 #include "main.h"
 using namespace std;
 
-
-
-
 int main() {
     
     double total_expenses=0.0;
     double total_allowed=0.0;
-
+    double total_expense_hotel=0.0;
+    double total_allowed_hotel=0.0;
+    double total_expense_taxi=0.0;
+    double total_allowed_taxi=0.0;
+    int taxi_days=0;
+    int travelled_nights=0;
+    double total_spent_meal=0.0;
+    double total_allowed_meal=0.0;
+    double total_saved_meal=0.0;
+    int parking_days=0;
+    double total_expense_parking=0.0;
+    double total_allowed_parking=0.0;
     // Functions
     int trip_days = getTripDays();
     TotalTime time = getTime();
     double air_fare= getAirFare();
     double car_rental = getCarRental();
     double vehicle_fee = calculateVehicleExpense();
-    ParkingFee parking= calculateParkingFee();
-    TaxiFee taxi= calculateTaxiFee();
+    calculateParkingFee(parking_days, total_expense_parking, total_allowed_parking);
+    calculateTaxiFee(taxi_days, total_expense_taxi, total_allowed_taxi);
     double registration = getConference();   
-    HotelExpense hotel = calculateHotelExpense();
-    MealExpense meal = calculate_meal_expense(trip_days, time.departure, time.arrival);
+    calculateHotelExpense(travelled_nights, total_expense_hotel, total_allowed_hotel);
+    calculate_meal_expense(trip_days, time.departure, time.arrival, total_spent_meal, total_allowed_meal, total_saved_meal);
     
     //Calculate
-    total_expenses=air_fare + car_rental + vehicle_fee + parking.total_expense_parking + taxi.total_expense_taxi + registration + hotel.total_expense_hotel + meal.total_spent_meal;
-    total_allowed =air_fare + car_rental + vehicle_fee + parking.total_allowed_parking + taxi.total_allowed_taxi + registration + hotel.total_allowed_hotel + meal.total_allowed_meal + meal.total_saved_meal;
+    total_expenses=air_fare + car_rental + vehicle_fee + total_expense_parking + total_expense_taxi + registration + total_expense_hotel + total_spent_meal;
+    total_allowed =air_fare + car_rental + vehicle_fee + total_allowed_parking + total_allowed_taxi + registration + total_allowed_hotel + total_allowed_meal + total_saved_meal;
 
     // ---------- Results ----------
     cout << "\n========== SUMMARY ==========\n";
