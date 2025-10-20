@@ -16,18 +16,21 @@ const double DINNER_ALLOWANCE = 16.0;
 // Return:
     // double: total meal expense spent
     // double: total meal expense allowed
-void calculate_meal_expense(int total_day_travel, string departure_time_string, string arrival_time_string,double &total_spent_meal,double &total_allowed_meal,double &total_saved_meal) {
-   int departure_time = stoi(departure_time_string, 0);
-    int arrival_time = stoi(arrival_time_string, 0);
+void calculate_meal_expense(int total_day_travel, int depH, int depM,int arrH, int arrM,double &total_spent_meal,double &total_allowed_meal,double &total_saved_meal) {
+   
+    const int depMinutes = depH * 60 ;
+    const int arrMinutes = arrH * 60 ;
+    int departure_time = depMinutes / 60;
+    int arrival_time = arrMinutes / 60;
     bool allow_breakfast_first = departure_time < 7;
     bool allow_breakfast_last = arrival_time > 8;
     bool allow_lunch_first = departure_time < 12;
     bool allow_lunch_last = arrival_time > 13;
     bool allow_dinner_first = departure_time < 18;
     bool allow_dinner_last = arrival_time > 19;
-    double total_spent_meal = 0.0;
-    double total_allowed_meal = 0.0;
-    double total_saved_meal = 0.0;
+    total_spent_meal = 0.0;
+    total_allowed_meal = 0.0;
+    total_saved_meal = 0.0;
     for(int i = 0; i < total_day_travel; i++){
         double breakfast_cost = 0.0, lunch_cost = 0.0, dinner_cost = 0.0;
         if (i == 0){

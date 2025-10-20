@@ -20,7 +20,7 @@ void calculateHotelExpense(int &travelled_night, double &total_expense_hotel, do
 
     for (int i = 1; i <= travelled_night; i++) {
         do {
-            cout << "Enter the Hotel expenses in the " << i << " night: $";
+            cout << "Enter the Hotel expenses in day" << i << ": $";
             cin >> used_per_night;
         } while (used_per_night < 0);
 

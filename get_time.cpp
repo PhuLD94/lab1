@@ -1,22 +1,34 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <limits>
 #include "main.h"
 using namespace std;
 
-TotalTime getTime (){
-    string departure_time, arrival_time;
-    int deph, depm, arrh, arrm;
-    do{
-        cout << "Enter the departure time:";cin >> departure_time;
-        cout << "Enter arrival time:";cin >> arrival_time;
-        deph = stoi(departure_time.substr(0,2), 0);
-        depm = stoi(departure_time.substr(3,2), 0);
-        arrh = stoi(arrival_time.substr(0,2), 0);
-        arrm = stoi(arrival_time.substr(3,2), 0);
-        if (deph < 0 || deph >= 24 || depm < 0 || depm >= 60  || arrh < 0 || arrh >= 24 || arrm < 0 || arrm >= 60 )
-        {   cout << "Check: " << endl;}
-    } while (deph < 0 || deph >= 24 || depm < 0 || depm >= 60  || arrh < 0 || arrh >= 24 || arrm < 0 || arrm >= 60);
-    cout << "Departure time: " << departure_time << "\nArrival time: " << arrival_time << endl;
-    return {departure_time, arrival_time};
-} 
+
+
+
+
+// Hàm nhập 1 mốc thời gian (giờ, phút)
+void readTime(const string &label, int &hour, int &minute) {
+    while (true) {
+        cout << "Enter " << label << " time (HH MM): ";
+        cin >> hour >> minute;
+
+        if (cin.fail()|| hour < 0 || hour >= 24 || minute < 0 || minute >= 60) {
+            cout << " Invalid time. Try again.\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            
+        } else break;
+    } 
+}
+
+// Hàm chính lấy thời gian khởi hành và đến nơi
+void getTime(int &depH, int &depM, int &arrH, int &arrM) {
+    cout << "Enter Travel Times\n";
+    readTime("departure", depH, depM);
+    readTime("arrival", arrH, arrM);
+    cout << "Departure: " << depH << ":" << depM<<endl;
+    cout << "Arrival  : " << arrH << ":" << arrM << endl;
+}

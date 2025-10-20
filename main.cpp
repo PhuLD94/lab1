@@ -20,9 +20,10 @@ int main() {
     int parking_days=0;
     double total_expense_parking=0.0;
     double total_allowed_parking=0.0;
+    int dh, dm, ah, am;
     // Functions
     int trip_days = getTripDays();
-    TotalTime time = getTime();
+    getTime(dh, dm, ah, am);
     double air_fare= getAirFare();
     double car_rental = getCarRental();
     double vehicle_fee = calculateVehicleExpense();
@@ -30,7 +31,7 @@ int main() {
     calculateTaxiFee(taxi_days, total_expense_taxi, total_allowed_taxi);
     double registration = getConference();   
     calculateHotelExpense(travelled_nights, total_expense_hotel, total_allowed_hotel);
-    calculate_meal_expense(trip_days, time.departure, time.arrival, total_spent_meal, total_allowed_meal, total_saved_meal);
+    calculate_meal_expense(trip_days, dh, dm, ah, am ,total_spent_meal, total_allowed_meal, total_saved_meal);
     
     //Calculate
     total_expenses=air_fare + car_rental + vehicle_fee + total_expense_parking + total_expense_taxi + registration + total_expense_hotel + total_spent_meal;

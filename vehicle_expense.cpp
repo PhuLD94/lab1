@@ -5,10 +5,10 @@
 using namespace std;
 
 double calculateVehicleExpense(){
-        double milesDriven; // số dặm đã lái
-        const double RATE = 0.27; // 0.27 USD mỗi dặm
+        double milesDriven; 
+        const double RATE = 0.27; 
         do{
-            cout << "Enter (miles driven):";
+            cout << "Enter (miles driven): ";
             cin >> milesDriven;
             if (milesDriven < 0)
               cout << "Enter again: " << endl; 
